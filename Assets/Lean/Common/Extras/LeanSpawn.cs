@@ -1,5 +1,4 @@
 using UnityEngine;
-using FSA = UnityEngine.Serialization.FormerlySerializedAsAttribute;
 
 namespace Lean.Common
 {
@@ -16,22 +15,22 @@ namespace Lean.Common
 		}
 
 		/// <summary>The prefab that this component can spawn.</summary>
-		public Transform Prefab { set { prefab = value; } get { return prefab; } } [FSA("Prefab")] [SerializeField] private Transform prefab;
+		public Transform Prefab;
 
 		/// <summary>If you call <b>Spawn()</b>, where should the position come from?</summary>
-		public SourceType DefaultPosition { set { defaultPosition = value; } get { return defaultPosition; } } [FSA("DefaultPosition")] [SerializeField] private SourceType defaultPosition;
+		public SourceType DefaultPosition;
 
 		/// <summary>If you call <b>Spawn()</b>, where should the rotation come from?</summary>
-		public SourceType DefaultRotation { set { defaultRotation = value; } get { return defaultRotation; } } [FSA("DefaultRotation")] [SerializeField] private SourceType defaultRotation;
+		public SourceType DefaultRotation;
 
 		/// <summary>This will spawn <b>Prefab</b> at the current <b>Transform.position</b>.</summary>
 		public void Spawn()
 		{
-			if (prefab != null)
+			if (Prefab != null)
 			{
-				var position = defaultPosition == SourceType.Prefab ? prefab.position : transform.position;
-				var rotation = defaultRotation == SourceType.Prefab ? prefab.rotation : transform.rotation;
-				var clone    = Instantiate(prefab, position, rotation);
+				var position = DefaultPosition == SourceType.Prefab ? Prefab.position : transform.position;
+				var rotation = DefaultRotation == SourceType.Prefab ? Prefab.rotation : transform.rotation;
+				var clone    = Instantiate(Prefab, position, rotation);
 
 				clone.gameObject.SetActive(true);
 			}
@@ -40,10 +39,10 @@ namespace Lean.Common
 		/// <summary>This will spawn <b>Prefab</b> at the specified position in world space.</summary>
 		public void Spawn(Vector3 position)
 		{
-			if (prefab != null)
+			if (Prefab != null)
 			{
-				var rotation = defaultRotation == SourceType.Prefab ? prefab.rotation : transform.rotation;
-				var clone    = Instantiate(prefab, position, rotation);
+				var rotation = DefaultRotation == SourceType.Prefab ? Prefab.rotation : transform.rotation;
+				var clone    = Instantiate(Prefab, position, rotation);
 
 				clone.gameObject.SetActive(true);
 			}
@@ -60,15 +59,15 @@ namespace Lean.Common.Editor
 	[UnityEditor.CustomEditor(typeof(TARGET))]
 	public class LeanSpawn_Editor : LeanEditor
 	{
+		private bool showUnusedEvents;
+
 		protected override void OnInspector()
 		{
 			TARGET tgt; TARGET[] tgts; GetTargets(out tgt, out tgts);
 
-			BeginError(Any(tgts, t => t.Prefab == null));
-				Draw("prefab", "The prefab that this component can spawn.");
-			EndError();
-			Draw("defaultPosition", "If you call Spawn(), where should the position come from?");
-			Draw("defaultRotation", "If you call Spawn(), where should the rotation come from?");
+			Draw("Prefab", "The prefab that this component can spawn.");
+			Draw("DefaultPosition", "If you call Spawn(), where should the position come from?");
+			Draw("DefaultRotation", "If you call Spawn(), where should the rotation come from?");
 		}
 	}
 }

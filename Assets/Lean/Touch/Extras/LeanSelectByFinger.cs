@@ -42,7 +42,8 @@ namespace Lean.Touch
 		/// NOTE: This method be called from a custom script for this component to work.</summary>
 		public void SelectScreenPosition(LeanFinger finger, Vector2 screenPosition)
 		{
-			var result = ScreenQuery.Query<LeanSelectable>(gameObject, screenPosition);
+			var point  = default(Vector3);
+			var result = ScreenQuery.Query<LeanSelectable>(gameObject, screenPosition, ref point);
 
 			Select(result, finger);
 		}
