@@ -20,6 +20,7 @@ public class GlobalSetting : MonoBehaviour
     }
 
     public static bool Exist => instance;
+    
 
     private void Awake()
     {
