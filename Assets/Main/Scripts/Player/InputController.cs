@@ -21,16 +21,19 @@ public class InputController : SingletonMonoBehaviour<InputController>
         }
     }
     public AnimatorController animatorController;
-    public SpriteRenderer spriteRenderer;
-    
-    private float horizontal;
+
+    [HideInInspector] public SpriteRenderer spriteRenderer;
     private Rigidbody2D rigid;
+    private CollisionController playerCollision;
+    [HideInInspector] public float horizontal;
     private bool onDash;
+    public bool onGround => CollisionController.Instance.onGround;
 
     private Tween tween;
     public override void Awake()
     {
         rigid = gameObject.GetComponent<Rigidbody2D>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         state = PlayerState.IDLE;
 
     }
@@ -49,7 +52,7 @@ public class InputController : SingletonMonoBehaviour<InputController>
         {
             return;
         }
-        if (playerState != PlayerState.RUN)
+        if (playerState != PlayerState.RUN && onGround)
         {
             playerState = PlayerState.RUN;
         }
@@ -57,13 +60,14 @@ public class InputController : SingletonMonoBehaviour<InputController>
         transform.localScale = new Vector2(-1f, 1f);
         horizontal = -1;
     }
+
     public void MoveRight()
     {
         if (onDash)
         {
             return;
         }
-        if (playerState != PlayerState.RUN)
+        if (playerState != PlayerState.RUN && onGround)
         {
             playerState = PlayerState.RUN;
         }
@@ -78,15 +82,19 @@ public class InputController : SingletonMonoBehaviour<InputController>
         {
             return;
         }
-        if (state != PlayerState.IDLE) playerState = PlayerState.IDLE;
+        if (state != PlayerState.IDLE && onGround)
+        {
+            playerState = PlayerState.IDLE;
+        }
 
         horizontal = 0;
     }
 
     public void Dash(Vector2 direction)
     {
-        if (!onDash)
+        if (!onDash && onGround)
         {
+            playerState = PlayerState.DASH;
             tween.Kill(false);
             rigid.gravityScale = 0;
             onDash = true;
@@ -99,14 +107,11 @@ public class InputController : SingletonMonoBehaviour<InputController>
                 rigid.velocity = Vector2.zero;
                 tween = DOTween.To(() => rigid.gravityScale, x => rigid.gravityScale = x, 3.2f, 2f);
                 onDash = false;
+
+                playerState = PlayerState.FALLING;
             });
         }
     }
 }
 
-public enum PlayerState
-{
-    IDLE,
-    RUN,
-    JUMP
-}
+

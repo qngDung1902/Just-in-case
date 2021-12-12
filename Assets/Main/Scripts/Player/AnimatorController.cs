@@ -7,8 +7,6 @@ using UnityEngine;
 public class AnimatorController : MonoBehaviour
 {
     public Animator animator;
-    public InputController inputController;
-
 
     public void UpdateAnimationState(PlayerState state)
     {
@@ -22,6 +20,23 @@ public class AnimatorController : MonoBehaviour
             case PlayerState.RUN:
                 animator.SetBool("run", true);
                 break;
+
+            case PlayerState.DASH:
+                animator.SetTrigger("dash");
+                break;
+
+            case PlayerState.FALLING:
+                animator.SetTrigger("falling");
+                break;
         }
     }
+}
+
+public enum PlayerState
+{
+    IDLE,
+    RUN,
+    DASH,
+    FALLING,
+
 }

@@ -27,7 +27,7 @@ public class Ghost : MonoBehaviour
 
     private void Despawn()
     {
-        spriteRenderer.DOFade(0f, destroyTime +0.2f).OnComplete(() => {SimplePool.Despawn(this.gameObject);});
-        
+        spriteRenderer.DOFade(0f, destroyTime + 0.1f).OnComplete(() => { SimplePool.Despawn(this.gameObject); });
+
     }
 }

@@ -7,6 +7,12 @@ public class GhostController : MonoBehaviour
     public GameObject ghostPrefab;
     public float delay;
     private float delta = 0;
+
+    private InputController player;
+    private void Awake() 
+    {
+        player = InputController.Instance;    
+    }
     
     private void Update() 
     {
@@ -17,6 +23,8 @@ public class GhostController : MonoBehaviour
         else
         {
             delta = delay;
+            if (player.state == PlayerState.IDLE) return;
+            
             CreateGhost();
         }
     }

@@ -970,6 +970,7 @@ GameObject:
   - component: {fileID: 1613328578}
   - component: {fileID: 1613328580}
   - component: {fileID: 1613328581}
+  - component: {fileID: 1613328582}
   m_Layer: 0
   m_Name: Main Character
   m_TagString: Untagged
@@ -1101,13 +1102,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9729f3dc63e3fc94b977dd443baf4325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  preInstantiate: 0
   speed: 4
   dashSpeed: 18
   jumpForce: 0
   state: 0
   animatorController: {fileID: 1613328580}
   spriteRenderer: {fileID: 1613328574}
-  horizontal: 0
 --- !u!95 &1613328579
 Animator:
   serializedVersion: 3
@@ -1140,7 +1141,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1613328579}
-  inputController: {fileID: 1613328578}
 --- !u!114 &1613328581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1154,12 +1154,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ghostPrefab: {fileID: 5916663504000169044, guid: 9500f90f045c4db4291f14ae9a335f90, type: 3}
-  delay: 0.01
-  destroyTime: 0.2
-  color: {r: 1, g: 1, b: 1, a: 0.08627451}
-  material: {fileID: 2100000, guid: 1f4b847946d173d46ac044661fe23092, type: 2}
-  spriteRenderer: {fileID: 0}
-  player: {fileID: 1613328578}
+  delay: 0.04
+--- !u!114 &1613328582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613328573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c42e661b61ebfc44da0c0096e5649726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preInstantiate: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  onGround: 0
+  collisionRadius: {x: 0.45, y: 0.1}
+  bottomOffset: {x: -0.03, y: -1}
 --- !u!1 &1650081524
 GameObject:
   m_ObjectHideFlags: 0
@@ -2040,9 +2054,9 @@ GameObject:
   - component: {fileID: 8620363723741430165}
   - component: {fileID: 8620363723741430164}
   - component: {fileID: 8620363723741430166}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Surface
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
