@@ -35,7 +35,7 @@ public class InputController : SingletonMonoBehaviour<InputController>
         rigid = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         state = PlayerState.IDLE;
-
+        Dash(Vector2.down);
     }
 
     private void FixedUpdate()
@@ -43,6 +43,11 @@ public class InputController : SingletonMonoBehaviour<InputController>
         if (!onDash)
         {
             rigid.velocity = new Vector2(speed * horizontal, rigid.velocity.y);
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            MoveRight();
         }
     }
 
@@ -57,8 +62,8 @@ public class InputController : SingletonMonoBehaviour<InputController>
             playerState = PlayerState.RUN;
         }
 
-        transform.localScale = new Vector2(-1f, 1f);
         horizontal = -1;
+        transform.localScale = new Vector2(-1f, 1f);
     }
 
     public void MoveRight()
@@ -71,9 +76,9 @@ public class InputController : SingletonMonoBehaviour<InputController>
         {
             playerState = PlayerState.RUN;
         }
+        horizontal = 1;
         transform.localScale = new Vector2(1f, 1f);
 
-        horizontal = 1;
     }
 
     public void Stop()
@@ -90,21 +95,38 @@ public class InputController : SingletonMonoBehaviour<InputController>
         horizontal = 0;
     }
 
+    public void UpdateByDirection(Vector2 direction)
+    {
+        if (direction.x < 0)
+        {
+            transform.localScale = new Vector2(-1f, 1f);
+        }
+        else if (direction.x > 0)
+        {
+            transform.localScale = new Vector2(1f, 1f);
+        }
+    }
+
     public void Dash(Vector2 direction)
     {
         if (!onDash && onGround)
         {
-            playerState = PlayerState.DASH;
-            tween.Kill(false);
-            rigid.gravityScale = 0;
             onDash = true;
+            playerState = PlayerState.DASH;
+            rigid.gravityScale = 0;
             rigid.velocity = Vector2.zero;
-            transform.DOScale(Vector2.one, 0.1f).OnStart(() =>
+            UpdateByDirection(direction);
+            tween.Kill(false);
+            transform.DOScaleZ(1f, 0.1f).OnStart(() =>
             {
                 rigid.AddForce(direction * dashSpeed, ForceMode2D.Impulse);
             }).OnComplete(() =>
             {
                 rigid.velocity = Vector2.zero;
+                if (horizontal != 0)
+                {
+                    transform.localScale = new Vector2(horizontal, horizontal);
+                }
                 tween = DOTween.To(() => rigid.gravityScale, x => rigid.gravityScale = x, 3.2f, 2f);
                 onDash = false;
 

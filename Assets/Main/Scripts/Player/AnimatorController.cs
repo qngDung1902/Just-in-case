@@ -26,6 +26,7 @@ public class AnimatorController : MonoBehaviour
                 break;
 
             case PlayerState.FALLING:
+                animator.SetBool("run", false);
                 animator.SetTrigger("falling");
                 break;
         }
