@@ -9,4 +9,7 @@ public class Const
     public const string SCENE_GAME = "Game";
 
     public const string TAG_GROUND = "Ground";
+
+    #region Animations
+    #endregion
 }

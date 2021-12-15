@@ -6,7 +6,7 @@ using DG.Tweening;
 public class Ghost : MonoBehaviour
 {
     public float destroyTime;
-    public Color color;
+    public Color color, colorRed;
     public Material material;
     private SpriteRenderer spriteRenderer;
     private InputController inputController;
@@ -20,7 +20,16 @@ public class Ghost : MonoBehaviour
     {
         spriteRenderer.sprite = inputController.spriteRenderer.sprite;
         spriteRenderer.transform.localScale = inputController.transform.localScale;
-        spriteRenderer.color = color;
+        switch (inputController.playerForm)
+        {
+            case PlayerForm.BASIC:
+                spriteRenderer.color = color;
+                break;
+            case PlayerForm.DEMON:
+                destroyTime = 0.25f;
+                spriteRenderer.color = colorRed;
+                break;
+        }
         spriteRenderer.material = material;
         Despawn();
     }
@@ -28,6 +37,5 @@ public class Ghost : MonoBehaviour
     private void Despawn()
     {
         spriteRenderer.DOFade(0f, destroyTime + 0.1f).OnComplete(() => { SimplePool.Despawn(this.gameObject); });
-
     }
 }
