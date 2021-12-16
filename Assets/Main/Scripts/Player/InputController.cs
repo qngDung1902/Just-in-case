@@ -40,47 +40,44 @@ public class InputController : SingletonMonoBehaviour<InputController>
         playerForm = PlayerForm.BASIC;
     }
 
-    private void FixedUpdate()
-    {
-        if (!onDash)
-        {
-            rigid.velocity = new Vector2(speed * horizontal, rigid.velocity.y);
-        }
-    }
 
     public void MoveLeft()
     {
-        if (playerState != PlayerState.RUN && onGround)
+        if (onGround)
         {
             playerState = PlayerState.RUN;
         }
-
-        horizontal = -1;
+        rigid.velocity = new Vector2(speed * -1, rigid.velocity.y);
         transform.localScale = new Vector2(-1f, 1f);
+        horizontal = -1;
     }
 
     public void MoveRight()
     {
-        if (playerState != PlayerState.RUN && onGround)
+        if (onGround)
         {
             playerState = PlayerState.RUN;
         }
-        horizontal = 1;
+        rigid.velocity = new Vector2(speed *  1, rigid.velocity.y);
         transform.localScale = new Vector2(1f, 1f);
+        horizontal = 1;
 
     }
 
     public void Stop()
     {
-        // if (onDash)
-        // {
-        //     return;
-        // }
-        if (state != PlayerState.IDLE && onGround)
-        {
-            playerState = PlayerState.IDLE;
-        }
+        playerState = PlayerState.IDLE;
+        rigid.velocity = Vector2.zero;
         horizontal = 0;
+    }
+
+    public void Jump()
+    {
+        if (onGround)
+        {
+            rigid.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+            playerState = PlayerState.FALLING;
+        }
     }
 
     public void UpdateByDirection(Vector2 direction)
@@ -95,47 +92,53 @@ public class InputController : SingletonMonoBehaviour<InputController>
         }
     }
 
-    public void Dash(Vector2 direction)
-    {
-        if (!onDash && onGround)
-        {
-            onDash = true;
-            rigid.gravityScale = 0;
-            rigid.velocity = Vector2.zero;
-            playerState = PlayerState.DASH;
-            UpdateByDirection(direction);
-            tween.Kill(false);
-            transform.DOScaleZ(1f, timeDash).OnStart(() =>
-            {
-                rigid.AddForce(direction * dashSpeed, ForceMode2D.Impulse);
-            }).OnComplete(() =>
-            {
-                rigid.velocity = Vector2.zero;
-                if (horizontal != 0)
-                {
-                    transform.localScale = new Vector2(horizontal, 1f);
-                }
-                tween = DOTween.To(() => rigid.gravityScale, x => rigid.gravityScale = x, 3.2f, 2f);
-                onDash = false;
+    // public void Dash(Vector2 direction)
+    // {
+    //     if (playerForm == PlayerForm.DEMON)
+    //     {
+    //         UpdateByDirection(direction);
+    //         playerState = PlayerState.DASH;
+    //         return;
+    //     }
+    //     if (!onDash && onGround)
+    //     {
+    //         onDash = true;
+    //         rigid.gravityScale = 0;
+    //         rigid.velocity = Vector2.zero;
+    //         playerState = PlayerState.DASH;
+    //         UpdateByDirection(direction);
+    //         tween.Kill(false);
+    //         transform.DOScaleZ(1f, timeDash).OnStart(() =>
+    //         {
+    //             rigid.AddForce(direction * dashSpeed, ForceMode2D.Impulse);
+    //         }).OnComplete(() =>
+    //         {
+    //             rigid.velocity = Vector2.zero;
+    //             if (horizontal != 0)
+    //             {
+    //                 transform.localScale = new Vector2(horizontal, 1f);
+    //             }
+    //             tween = DOTween.To(() => rigid.gravityScale, x => rigid.gravityScale = x, 3.2f, 2f);
+    //             onDash = false;
 
-                if (onGround)
-                {
-                    if (horizontal == 0)
-                    {
-                        playerState = PlayerState.IDLE;
-                    }
-                    else
-                    {
-                        playerState = PlayerState.RUN;
-                    }
-                }
-                else
-                {
-                    playerState = PlayerState.FALLING;
-                }
-            });
-        }
-    }
+    //             if (onGround)
+    //             {
+    //                 if (horizontal == 0)
+    //                 {
+    //                     playerState = PlayerState.IDLE;
+    //                 }
+    //                 else
+    //                 {
+    //                     playerState = PlayerState.RUN;
+    //                 }
+    //             }
+    //             else
+    //             {
+    //                 playerState = PlayerState.FALLING;
+    //             }
+    //         });
+    //     }
+    // }
 
     public void TransformToDemon()
     {

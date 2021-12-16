@@ -16,23 +16,19 @@ public class AnimatorController : MonoBehaviour
             switch (state)
             {
                 case PlayerState.IDLE:
-                    animator.SetBool("Idle", true);
-                    animator.SetBool("run", false);
+                    ChangeAnimation("Base_idle");
                     break;
 
                 case PlayerState.RUN:
-                    animator.SetBool("run", true);
-                    animator.SetBool("Idle", false);
+                    ChangeAnimation("Base_run");
                     break;
 
                 case PlayerState.DASH:
-                    animator.SetTrigger("dash");
-                    animator.SetBool("Idle", false);
+                    ChangeAnimation("base_dash");
                     break;
 
                 case PlayerState.FALLING:
-                    animator.SetBool("run", false);
-                    animator.SetTrigger("falling");
+                    ChangeAnimation("base_falling");
                     break;
             }
         }
@@ -41,7 +37,7 @@ public class AnimatorController : MonoBehaviour
             switch (state)
             {
                 case PlayerState.TAKEDOWN:
-                ChangeAnimation("player_demon_takingdown");
+                    ChangeAnimation("player_demon_takingdown");
                     break;
 
                 case PlayerState.IDLE:
