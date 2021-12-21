@@ -31,7 +31,11 @@ public class CollisionController : SingletonMonoBehaviour<CollisionController>
             {
                 InputController.Instance.playerState = PlayerState.IDLE;
             }
-            else InputController.Instance.playerState = PlayerState.RUN;
+            else
+            {
+                InputController.Instance.playerState = PlayerState.RUN;
+                InputController.Instance.UpdateByDirection((float)InputController.Instance.horizontal);
+            }
         }
     }
 }

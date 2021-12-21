@@ -53,17 +53,11 @@ public class AnimatorController : MonoBehaviour
                     break;
 
                 case PlayerState.FALLING:
-
                     break;
             }
         }
 
 
-    }
-
-    public void ChangeToDemonAnimator()
-    {
-        animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/Demon_animator");
     }
 
     private void ChangeAnimation(string newAnimation)
@@ -73,6 +67,16 @@ public class AnimatorController : MonoBehaviour
             animator.Play(newAnimation);
             currentAnimation = newAnimation;
         }
+    }
+
+    public void ChangeToDemonAnimator()
+    {
+        animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/Demon_animator");
+    }
+
+    public void Play(string newAnimation)
+    {
+        ChangeAnimation(newAnimation);
     }
 }
 

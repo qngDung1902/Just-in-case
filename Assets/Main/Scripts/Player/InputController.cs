@@ -22,11 +22,20 @@ public class InputController : SingletonMonoBehaviour<InputController>
     }
     public AnimatorController animatorController;
     public GhostController ghostController;
+    public GameObject slashEffect;
     [HideInInspector] public SpriteRenderer spriteRenderer;
-    [HideInInspector] public float horizontal;
     [HideInInspector] public PlayerForm playerForm;
+
+    // [HideInInspector]
+    public int horizontal;
+
+
     private CollisionController playerCollision;
     private Rigidbody2D rigid;
+
+    private Vector2 tmpDir;
+
+    private float localGravity;
 
     private bool onDash;
     public bool onGround => CollisionController.Instance.onGround;
@@ -36,38 +45,45 @@ public class InputController : SingletonMonoBehaviour<InputController>
     {
         rigid = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
+        localGravity = rigid.gravityScale;
+
         state = PlayerState.IDLE;
         playerForm = PlayerForm.BASIC;
     }
 
-
-    public void MoveLeft()
+    private void Update()
     {
-        if (onGround)
-        {
-            playerState = PlayerState.RUN;
-        }
-        rigid.velocity = new Vector2(speed * -1, rigid.velocity.y);
-        transform.localScale = new Vector2(-1f, 1f);
-        horizontal = -1;
+        UpdateMovement(horizontal);
     }
 
-    public void MoveRight()
+    private void UpdateMovement(int direction)
     {
-        if (onGround)
+        if (playerState != PlayerState.DASH)
+        {
+            rigid.velocity = new Vector2(speed * direction, rigid.velocity.y);
+        }
+    }
+
+    public void Move(int direction)
+    {
+        if (playerState != PlayerState.DASH)
         {
             playerState = PlayerState.RUN;
+            transform.localScale = new Vector2(direction, 1f);
+            horizontal = direction;
+            rigid.gravityScale = localGravity;
         }
-        rigid.velocity = new Vector2(speed *  1, rigid.velocity.y);
-        transform.localScale = new Vector2(1f, 1f);
-        horizontal = 1;
-
     }
 
     public void Stop()
     {
-        playerState = PlayerState.IDLE;
+        if (playerState != PlayerState.DASH)
+        {
+            playerState = PlayerState.IDLE;
+        }
         rigid.velocity = Vector2.zero;
+        rigid.gravityScale = localGravity;
         horizontal = 0;
     }
 
@@ -75,21 +91,84 @@ public class InputController : SingletonMonoBehaviour<InputController>
     {
         if (onGround)
         {
-            rigid.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+            rigid.velocity = new Vector2(rigid.velocity.x, 0);
+            rigid.velocity += Vector2.up * jumpForce;
             playerState = PlayerState.FALLING;
         }
     }
 
-    public void UpdateByDirection(Vector2 direction)
+    public void Flick(Vector2 direction)
     {
-        if (direction.x < 0)
+        tmpDir = direction;
+        rigid.gravityScale = 0;
+        rigid.velocity = Vector2.zero;
+        rigid.velocity += direction * dashSpeed;
+        playerState = PlayerState.DASH;
+
+        UpdateByDirection(direction.x);
+        float angleRad = Mathf.Atan2(direction.y, direction.x);
+        float angleDeg = (180 / Mathf.PI) * angleRad;
+        if (transform.localScale.x >= 0)
         {
-            transform.localScale = new Vector2(-1f, 1f);
+            slashEffect.transform.rotation = Quaternion.Euler(0f, 0f, angleDeg);
+            slashEffect.SetActive(true);
         }
-        else if (direction.x > 0)
+        else
         {
-            transform.localScale = new Vector2(1f, 1f);
+            slashEffect.transform.rotation = Quaternion.Euler(0f, 0f, angleDeg + 180f);
+            slashEffect.SetActive(true);
         }
+    }
+
+    public void UpdateByDirection(float hozirontalDirection)
+    {
+        if (hozirontalDirection == 0) return;
+
+        transform.localScale = new Vector2(hozirontalDirection = hozirontalDirection > 0 ? 1 : -1, 1f);
+    }
+
+    public void CompleteDash()
+    {
+        rigid.velocity = Vector2.zero;
+        rigid.gravityScale = localGravity;
+        UpdateOnCompletedDash();
+    }
+
+    public void UpdateOnCompletedDash()
+    {
+        if (!onGround)
+        {
+            animatorController.Play("player_demon_backtofall");
+            UpdateByDirection(horizontal);
+            playerState = PlayerState.FALLING;
+        }
+        else if (horizontal != 0)
+        {
+            animatorController.Play("player_demon_baktorun");
+            UpdateByDirection(horizontal);
+        }
+        else if (horizontal == 0)
+        {
+            animatorController.Play("player_demon_baktoidle");
+        }
+    }
+
+    public void HitEffect(Vector2 hitPosition)
+    {
+        Time.timeScale = 0;
+        StartCoroutine(IEnumHitEffect(hitPosition));
+    }
+
+    private IEnumerator IEnumHitEffect(Vector2 hitPosition)
+    {
+        yield return new WaitForSecondsRealtime(0.01f);
+        EffectManager.Instance.SpawnHitEffect(hitPosition, tmpDir);
+        Camera.main.DOShakeRotation(0.2f, 1, 30, 25, true).SetUpdate(true).OnComplete(() => Time.timeScale = 1);
+    }
+
+    public void State(PlayerState state)
+    {
+        playerState = state;
     }
 
     // public void Dash(Vector2 direction)
