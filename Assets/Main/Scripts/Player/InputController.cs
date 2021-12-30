@@ -50,6 +50,7 @@ public class InputController : SingletonMonoBehaviour<InputController>
 
         state = PlayerState.IDLE;
         playerForm = PlayerForm.BASIC;
+
     }
 
     private void Update()
@@ -223,9 +224,11 @@ public class InputController : SingletonMonoBehaviour<InputController>
     {
         if (playerForm != PlayerForm.DEMON)
         {
+            Stop();
             playerForm = PlayerForm.DEMON;
             ghostController.delay = 0.1f;
             animatorController.ChangeToDemonAnimator();
+            GameUIManager.Instance.Active();
         }
     }
 }

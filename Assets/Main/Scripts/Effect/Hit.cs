@@ -10,7 +10,6 @@ public class Hit : MonoBehaviour
     public void UpdateDirection(Vector2 direction)
     {
         tmpDirection = direction;
-        Debug.Log(tmpDirection);
         float angleRad = Mathf.Atan2(direction.y, direction.x);
         float angleDeg = (180 / Mathf.PI) * angleRad;
         gameObject.transform.rotation = Quaternion.Euler(0f, 0f, angleDeg);

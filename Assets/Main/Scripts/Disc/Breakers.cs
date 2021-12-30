@@ -29,17 +29,6 @@ namespace BreakersNQD
             callback?.Invoke();
         }
 
-        public static Tween IncreaseValue(float start, float end, float duration, Action<float> update = null, Action<float> complete = null)
-        {
-            return DOTween.To(() => start, x => start = x, end, duration).SetEase(Ease.Linear).OnUpdate(delegate
-            {
-                update?.Invoke(start);
-            }).OnComplete(delegate
-            {
-                complete?.Invoke(end);
-            });
-        }
-
         public static void LoadResourceAsyn<T>(Action<ResourceRequest> callback)
         {
             Mono.Instance.StartCoroutine(LoadTask(typeof(T).ToString(),callback));
