@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Lean.Gui;
 
 public class InputController : SingletonMonoBehaviour<InputController>
 {
-    public float speed, dashSpeed, timeDash;
-    public float jumpForce;
+    public float dashSpeed, timeDash;
     public PlayerState state;
     public PlayerState playerState
     {
@@ -22,25 +22,27 @@ public class InputController : SingletonMonoBehaviour<InputController>
     }
     public AnimatorController animatorController;
     public GhostController ghostController;
+    public LeanJoystick joystick;
     public GameObject slashEffect;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public PlayerForm playerForm;
 
     // [HideInInspector]
-    public int horizontal;
-
+    public float horizontal;
 
     private CollisionController playerCollision;
     private Rigidbody2D rigid;
-
     private Vector2 tmpDir;
-
     private float localGravity;
-
     private bool onDash;
     public bool onGround => CollisionController.Instance.onGround;
-
     private Tween tween;
+
+    public StateMachine movementStateMachine;
+    public StandingState standing;
+    public JumpingState jumping;
+
+
     public override void Awake()
     {
         rigid = gameObject.GetComponent<Rigidbody2D>();
@@ -48,54 +50,55 @@ public class InputController : SingletonMonoBehaviour<InputController>
 
         localGravity = rigid.gravityScale;
 
-        state = PlayerState.IDLE;
         playerForm = PlayerForm.BASIC;
 
     }
 
+    private void Start()
+    {
+        movementStateMachine = new StateMachine();
+
+        standing = new StandingState(this, movementStateMachine);
+        jumping = new JumpingState(this, movementStateMachine);
+
+        movementStateMachine.Initialize(standing);
+    }
+
     private void Update()
     {
-        UpdateMovement(horizontal);
+        // UpdateMovement(horizontal);
+        movementStateMachine.CurrentState.HandleInput();
+
+        movementStateMachine.CurrentState.LogicUpdate();
     }
 
-    private void UpdateMovement(int direction)
+    private void FixedUpdate() 
     {
-        if (playerState != PlayerState.DASH)
-        {
-            rigid.velocity = new Vector2(speed * direction, rigid.velocity.y);
-        }
+        movementStateMachine.CurrentState.PhysicUpdate();
     }
 
-    public void Move(int direction)
+    public void UpdateMovement(float speed)
     {
-        if (playerState != PlayerState.DASH)
-        {
-            playerState = PlayerState.RUN;
-            transform.localScale = new Vector2(direction, 1f);
-            horizontal = direction;
-            rigid.gravityScale = localGravity;
-        }
+        horizontal = joystick.ScaledValue.x;
+        rigid.velocity = new Vector2(speed * horizontal, rigid.velocity.y);
     }
 
-    public void Stop()
+    public void UpdateDirection()
     {
-        if (playerState != PlayerState.DASH)
-        {
-            playerState = PlayerState.IDLE;
-        }
-        rigid.velocity = Vector2.zero;
-        rigid.gravityScale = localGravity;
-        horizontal = 0;
+        if (horizontal == 0) return;
+
+        transform.localScale = new Vector2(horizontal = horizontal > 0 ? 1 : -1, 1f);
     }
 
     public void Jump()
     {
-        if (onGround)
-        {
-            rigid.velocity = new Vector2(rigid.velocity.x, 0);
-            rigid.velocity += Vector2.up * jumpForce;
-            playerState = PlayerState.FALLING;
-        }
+        standing.jump = true;
+    }
+
+    public void ApplyJump(float jumpForce)
+    {
+        rigid.velocity = new Vector2(rigid.velocity.x, 0);
+        rigid.velocity += Vector2.up * jumpForce;
     }
 
     public void Flick(Vector2 direction)
@@ -167,64 +170,15 @@ public class InputController : SingletonMonoBehaviour<InputController>
         Camera.main.DOShakeRotation(0.2f, 1, 30, 25, true).SetUpdate(true).OnComplete(() => Time.timeScale = 1);
     }
 
-    public void State(PlayerState state)
-    {
-        playerState = state;
-    }
-
-    // public void Dash(Vector2 direction)
+    // public void State(PlayerState state)
     // {
-    //     if (playerForm == PlayerForm.DEMON)
-    //     {
-    //         UpdateByDirection(direction);
-    //         playerState = PlayerState.DASH;
-    //         return;
-    //     }
-    //     if (!onDash && onGround)
-    //     {
-    //         onDash = true;
-    //         rigid.gravityScale = 0;
-    //         rigid.velocity = Vector2.zero;
-    //         playerState = PlayerState.DASH;
-    //         UpdateByDirection(direction);
-    //         tween.Kill(false);
-    //         transform.DOScaleZ(1f, timeDash).OnStart(() =>
-    //         {
-    //             rigid.AddForce(direction * dashSpeed, ForceMode2D.Impulse);
-    //         }).OnComplete(() =>
-    //         {
-    //             rigid.velocity = Vector2.zero;
-    //             if (horizontal != 0)
-    //             {
-    //                 transform.localScale = new Vector2(horizontal, 1f);
-    //             }
-    //             tween = DOTween.To(() => rigid.gravityScale, x => rigid.gravityScale = x, 3.2f, 2f);
-    //             onDash = false;
-
-    //             if (onGround)
-    //             {
-    //                 if (horizontal == 0)
-    //                 {
-    //                     playerState = PlayerState.IDLE;
-    //                 }
-    //                 else
-    //                 {
-    //                     playerState = PlayerState.RUN;
-    //                 }
-    //             }
-    //             else
-    //             {
-    //                 playerState = PlayerState.FALLING;
-    //             }
-    //         });
-    //     }
+    //     playerState = state;
     // }
 
     public void TransformToDemon()
     {
         if (playerForm != PlayerForm.DEMON)
         {
-            Stop();
             playerForm = PlayerForm.DEMON;
             ghostController.delay = 0.1f;
             animatorController.ChangeToDemonAnimator();
