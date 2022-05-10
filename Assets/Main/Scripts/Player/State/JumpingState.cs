@@ -15,6 +15,8 @@ public class JumpingState : State
     {
         base.Enter();
         grounded = false;
+        Debug.Log(1);
+        character.animatorController.Play("base_falling");
         Jump();
     }
 

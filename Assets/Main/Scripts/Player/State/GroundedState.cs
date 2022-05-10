@@ -14,6 +14,7 @@ public class GroundedState : State
     public override void Enter()
     {
         base.Enter();
+        jump = false;
     }
 
     public override void Exit()
@@ -21,9 +22,9 @@ public class GroundedState : State
         base.Exit();
     }
 
-    public override void HandleInput()
+    public override void LogicUpdate()
     {
-        base.HandleInput();
+        base.LogicUpdate();
     }
 
     public override void PhysicUpdate()

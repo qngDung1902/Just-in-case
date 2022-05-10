@@ -6,6 +6,8 @@ public abstract class State
 {
     protected InputController character;
     protected StateMachine stateMachine;
+
+    public bool jump { get; set; }
     
     protected State(InputController character, StateMachine stateMachine)
     {

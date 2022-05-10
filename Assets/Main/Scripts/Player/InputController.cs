@@ -7,19 +7,19 @@ using Lean.Gui;
 public class InputController : SingletonMonoBehaviour<InputController>
 {
     public float dashSpeed, timeDash;
-    public PlayerState state;
-    public PlayerState playerState
-    {
-        get
-        {
-            return state;
-        }
-        set
-        {
-            state = value;
-            animatorController.UpdateAnimationState(state);
-        }
-    }
+    // public PlayerState state;
+    // public PlayerState playerState
+    // {
+    //     get
+    //     {
+    //         return state;
+    //     }
+    //     set
+    //     {
+    //         state = value;
+    //         animatorController.UpdateAnimationState(state);
+    //     }
+    // }
     public AnimatorController animatorController;
     public GhostController ghostController;
     public LeanJoystick joystick;
@@ -39,8 +39,10 @@ public class InputController : SingletonMonoBehaviour<InputController>
     private Tween tween;
 
     public StateMachine movementStateMachine;
+    public GroundedState grounded;
     public StandingState standing;
     public JumpingState jumping;
+    public RunningState running;
 
 
     public override void Awake()
@@ -58,18 +60,23 @@ public class InputController : SingletonMonoBehaviour<InputController>
     {
         movementStateMachine = new StateMachine();
 
+        grounded = new GroundedState(this, movementStateMachine);
         standing = new StandingState(this, movementStateMachine);
         jumping = new JumpingState(this, movementStateMachine);
+        running = new RunningState(this, movementStateMachine);
 
         movementStateMachine.Initialize(standing);
     }
 
     private void Update()
     {
-        // UpdateMovement(horizontal);
         movementStateMachine.CurrentState.HandleInput();
-
         movementStateMachine.CurrentState.LogicUpdate();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump();
+        }
     }
 
     private void FixedUpdate() 
@@ -92,7 +99,7 @@ public class InputController : SingletonMonoBehaviour<InputController>
 
     public void Jump()
     {
-        standing.jump = true;
+        movementStateMachine.CurrentState.jump = true;
     }
 
     public void ApplyJump(float jumpForce)
@@ -107,7 +114,7 @@ public class InputController : SingletonMonoBehaviour<InputController>
         rigid.gravityScale = 0;
         rigid.velocity = Vector2.zero;
         rigid.velocity += direction * dashSpeed;
-        playerState = PlayerState.DASH;
+        // playerState = PlayerState.DASH;
 
         UpdateByDirection(direction.x);
         float angleRad = Mathf.Atan2(direction.y, direction.x);
@@ -144,7 +151,7 @@ public class InputController : SingletonMonoBehaviour<InputController>
         {
             animatorController.Play("player_demon_backtofall");
             UpdateByDirection(horizontal);
-            playerState = PlayerState.FALLING;
+            // playerState = PlayerState.FALLING;
         }
         else if (horizontal != 0)
         {

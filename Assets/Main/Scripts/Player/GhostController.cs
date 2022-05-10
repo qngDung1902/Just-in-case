@@ -23,7 +23,7 @@ public class GhostController : MonoBehaviour
         else
         {
             delta = delay;
-            if (player.state == PlayerState.IDLE) return;
+            // if (player.state == PlayerState.IDLE) return;
             
             CreateGhost();
         }

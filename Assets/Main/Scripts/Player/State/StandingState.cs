@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StandingState : GroundedState
 {
-    public bool jump { get; set; }
+    
     public StandingState(InputController character, StateMachine stateMachine) : base(character, stateMachine)
     {
     }
@@ -12,7 +12,8 @@ public class StandingState : GroundedState
     public override void Enter()
     {
         base.Enter();
-        jump = false;
+        Debug.Log(2);
+        character.animatorController.Play("Base_idle");
     }
 
     public override void HandleInput()
@@ -23,6 +24,12 @@ public class StandingState : GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        if (character.horizontal != 0)
+        {
+            stateMachine.ChangeState(character.running);
+        }
+
         if (jump)
         {
             stateMachine.ChangeState(character.jumping);
