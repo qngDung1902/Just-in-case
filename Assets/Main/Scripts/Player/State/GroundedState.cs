@@ -15,6 +15,7 @@ public class GroundedState : State
     {
         base.Enter();
         jump = false;
+        ground = true;
     }
 
     public override void Exit()

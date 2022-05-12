@@ -79,7 +79,7 @@ public class InputController : SingletonMonoBehaviour<InputController>
         }
     }
 
-    private void FixedUpdate() 
+    private void FixedUpdate()
     {
         movementStateMachine.CurrentState.PhysicUpdate();
     }
@@ -190,6 +190,14 @@ public class InputController : SingletonMonoBehaviour<InputController>
             ghostController.delay = 0.1f;
             animatorController.ChangeToDemonAnimator();
             GameUIManager.Instance.Active();
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag(Const.TAG_GROUND))
+        {
+            movementStateMachine.CurrentState.ground = true;
         }
     }
 }

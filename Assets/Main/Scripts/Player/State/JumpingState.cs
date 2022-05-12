@@ -5,7 +5,7 @@ using UnityEngine;
 public class JumpingState : State
 {
     private float jumpForce = 10;
-    private bool grounded;
+    private float speedWhenJump = 10;
 
     public JumpingState(InputController character, StateMachine stateMachine) : base(character, stateMachine)
     {
@@ -14,8 +14,7 @@ public class JumpingState : State
     public override void Enter()
     {
         base.Enter();
-        grounded = false;
-        Debug.Log(1);
+        ground = false;
         character.animatorController.Play("base_falling");
         Jump();
     }
@@ -23,16 +22,22 @@ public class JumpingState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (grounded)
+        if (ground && character.horizontal == 0)
         {
             stateMachine.ChangeState(character.standing);
+        }
+
+        if (ground && character.horizontal != 0)
+        {
+            stateMachine.ChangeState(character.running);
         }
     }
 
     public override void PhysicUpdate()
     {
         base.PhysicUpdate();
-        grounded = CollisionController.Instance.onGround;
+        character.UpdateMovement(speedWhenJump);
+        character.UpdateDirection();
     }
 
     private void Jump()

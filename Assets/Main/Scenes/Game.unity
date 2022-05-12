@@ -443,7 +443,7 @@ RectTransform:
   m_Father: {fileID: 1134017049}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.028821243, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
@@ -2110,7 +2110,6 @@ GameObject:
   - component: {fileID: 1613328578}
   - component: {fileID: 1613328580}
   - component: {fileID: 1613328581}
-  - component: {fileID: 1613328582}
   m_Layer: 0
   m_Name: Main Character
   m_TagString: Untagged
@@ -2246,7 +2245,6 @@ MonoBehaviour:
   preInstantiate: 0
   dashSpeed: 22
   timeDash: 0.3
-  state: 1
   animatorController: {fileID: 1613328580}
   ghostController: {fileID: 1613328581}
   joystick: {fileID: 3125867688847976660}
@@ -2300,25 +2298,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostPrefab: {fileID: 5916663504000169044, guid: 9500f90f045c4db4291f14ae9a335f90, type: 3}
   delay: 0.04
---- !u!114 &1613328582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1613328573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c42e661b61ebfc44da0c0096e5649726, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  preInstantiate: 0
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  onGround: 0
-  collisionRadius: {x: 0.45, y: 0.1}
-  bottomOffset: {x: -0.03, y: -1}
 --- !u!1 &1650081524
 GameObject:
   m_ObjectHideFlags: 0

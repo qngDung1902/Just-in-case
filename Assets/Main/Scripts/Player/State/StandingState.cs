@@ -12,7 +12,6 @@ public class StandingState : GroundedState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log(2);
         character.animatorController.Play("Base_idle");
     }
 

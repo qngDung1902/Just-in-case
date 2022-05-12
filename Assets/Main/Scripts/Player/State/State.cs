@@ -8,7 +8,8 @@ public abstract class State
     protected StateMachine stateMachine;
 
     public bool jump { get; set; }
-    
+    public bool ground { get; set; }
+
     protected State(InputController character, StateMachine stateMachine)
     {
         this.character = character;
