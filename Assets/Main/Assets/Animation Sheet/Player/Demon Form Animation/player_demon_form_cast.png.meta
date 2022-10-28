@@ -102,6 +102,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -736,6 +737,33 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      player_demon_form_cast_18: 4459769386862604125
+      player_demon_form_cast_19: 3999609101617938737
+      player_demon_form_cast_14: -810885118454173157
+      player_demon_form_cast_5: 5483714455603128331
+      player_demon_form_cast_20: 407932065329710428
+      player_demon_form_cast_21: -9177971799439191241
+      player_demon_form_cast_23: -2543847718145868208
+      player_demon_form_cast_22: 7899170956094718976
+      player_demon_form_cast_25: 2925731757973841276
+      player_demon_form_cast_3: 8915711089781678436
+      player_demon_form_cast_9: -4427118338136085301
+      player_demon_form_cast_16: 4635282612317547892
+      player_demon_form_cast_10: -1917157583734974635
+      player_demon_form_cast_0: 7391302190020365883
+      player_demon_form_cast_13: 4580312212173879072
+      player_demon_form_cast_11: -7694747305455730428
+      player_demon_form_cast_17: -107719846201793160
+      player_demon_form_cast_1: 6458632417745080586
+      player_demon_form_cast_7: -7774119518375393801
+      player_demon_form_cast_12: 4571749500049510665
+      player_demon_form_cast_24: -6889850168388289692
+      player_demon_form_cast_6: -7882311324443889467
+      player_demon_form_cast_4: 6311110550722823212
+      player_demon_form_cast_8: 6247321819165362948
+      player_demon_form_cast_2: -4612182809019666844
+      player_demon_form_cast_15: -5647910231052027266
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

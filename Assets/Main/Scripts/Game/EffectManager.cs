@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
+
 using DG.Tweening;
 using BreakersNQD;
 
 public class EffectManager : SingletonMonoBehaviour<EffectManager>
 {
     public GameObject ghostEffect, hitEffect;
-    public Light2D light2D;
+    public UnityEngine.Rendering.Universal.Light2D light2D;
 
     private Tween tween;
 

@@ -48,6 +48,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -304,6 +305,15 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      player_demon_form_run_4: 4199534890244347506
+      player_demon_form_run_3: -1126450123546652812
+      player_demon_form_run_6: -2039679565768448330
+      player_demon_form_run_5: -1799765773083526391
+      player_demon_form_run_0: -3605217888198649745
+      player_demon_form_run_1: 4705534058182057499
+      player_demon_form_run_7: -1363538241302482696
+      player_demon_form_run_2: 8504702450102785837
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
