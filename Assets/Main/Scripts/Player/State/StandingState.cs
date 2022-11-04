@@ -26,12 +26,12 @@ public class StandingState : GroundedState
 
         if (character.horizontal != 0)
         {
-            stateMachine.ChangeState(character.running);
+            stateMachine.ChangeState(character.runState);
         }
 
         if (jump)
         {
-            stateMachine.ChangeState(character.jumping);
+            stateMachine.ChangeState(character.jumpState);
         }
     }
 }

@@ -24,12 +24,12 @@ public class JumpingState : State
         base.LogicUpdate();
         if (ground && character.horizontal == 0)
         {
-            stateMachine.ChangeState(character.standing);
+            stateMachine.ChangeState(character.idleState);
         }
 
         if (ground && character.horizontal != 0)
         {
-            stateMachine.ChangeState(character.running);
+            stateMachine.ChangeState(character.runState);
         }
     }
 

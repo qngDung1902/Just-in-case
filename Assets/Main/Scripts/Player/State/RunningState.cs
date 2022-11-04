@@ -24,12 +24,12 @@ public class RunningState : GroundedState
         base.LogicUpdate();
         if (character.horizontal == 0)
         {
-            stateMachine.ChangeState(character.standing);
+            stateMachine.ChangeState(character.idleState);
         }
 
         if (jump)
         {
-            stateMachine.ChangeState(character.jumping);
+            stateMachine.ChangeState(character.jumpState);
         }
     }
 }
