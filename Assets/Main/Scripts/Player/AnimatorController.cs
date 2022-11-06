@@ -9,56 +9,56 @@ public class AnimatorController : MonoBehaviour
     public Animator animator;
     private string currentAnimation;
 
-    public void UpdateAnimationState(PlayerState state)
-    {
-        if (InputController.Instance.playerForm == PlayerForm.BASIC)
-        {
-            switch (state)
-            {
-                case PlayerState.IDLE:
-                    ChangeAnimation("Base_idle");
-                    break;
+    // public void UpdateAnimationState(PlayerState state)
+    // {
+    //     if (InputController.Instance.playerForm == PlayerForm.BASIC)
+    //     {
+    //         switch (state)
+    //         {
+    //             case PlayerState.IDLE:
+    //                 ChangeAnimation("Base_idle");
+    //                 break;
 
-                case PlayerState.RUN:
-                    ChangeAnimation("Base_run");
-                    break;
+    //             case PlayerState.RUN:
+    //                 ChangeAnimation("Base_run");
+    //                 break;
 
-                case PlayerState.DASH:
-                    ChangeAnimation("base_dash");
-                    break;
+    //             case PlayerState.DASH:
+    //                 ChangeAnimation("base_dash");
+    //                 break;
 
-                case PlayerState.FALLING:
-                    ChangeAnimation("base_falling");
-                    break;
-            }
-        }
-        else if (InputController.Instance.playerForm == PlayerForm.DEMON)
-        {
-            switch (state)
-            {
-                case PlayerState.TAKEDOWN:
-                    ChangeAnimation("player_demon_takingdown");
-                    break;
+    //             case PlayerState.FALLING:
+    //                 ChangeAnimation("base_falling");
+    //                 break;
+    //         }
+    //     }
+    //     else if (InputController.Instance.playerForm == PlayerForm.DEMON)
+    //     {
+    //         switch (state)
+    //         {
+    //             case PlayerState.TAKEDOWN:
+    //                 ChangeAnimation("player_demon_takingdown");
+    //                 break;
 
-                case PlayerState.IDLE:
-                    ChangeAnimation("player_demon_idle");
-                    break;
+    //             case PlayerState.IDLE:
+    //                 ChangeAnimation("player_demon_idle");
+    //                 break;
 
-                case PlayerState.RUN:
-                    ChangeAnimation("player_demon_run");
-                    break;
+    //             case PlayerState.RUN:
+    //                 ChangeAnimation("player_demon_run");
+    //                 break;
 
-                case PlayerState.DASH:
-                    ChangeAnimation("player_demon_dash");
-                    break;
+    //             case PlayerState.DASH:
+    //                 ChangeAnimation("player_demon_dash");
+    //                 break;
 
-                case PlayerState.FALLING:
-                    break;
-            }
-        }
+    //             case PlayerState.FALLING:
+    //                 break;
+    //         }
+    //     }
 
 
-    }
+    // }
 
     private void ChangeAnimation(string newAnimation)
     {
@@ -80,14 +80,14 @@ public class AnimatorController : MonoBehaviour
     }
 }
 
-public enum PlayerState
-{
-    TAKEDOWN,
-    IDLE,
-    RUN,
-    DASH,
-    FALLING,
-}
+// public enum PlayerState
+// {
+//     TAKEDOWN,
+//     IDLE,
+//     RUN,
+//     DASH,
+//     FALLING,
+// }
 
 public enum PlayerForm
 {
