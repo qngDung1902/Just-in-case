@@ -8,9 +8,10 @@ public class Movement : MonoBehaviour {
     public int FacingDirection { get; private set; }
     public bool CanSetVelocity { get; set; }
 
-    public Vector2 CurrentVeloctity { get; private set; }
+    public Vector2 CurrentVelocity { get; private set; }
 
     Vector2 workspace;
+    int intInput;
     void Awake() {
         rigid = GetComponentInParent<Rigidbody2D>();
 
@@ -19,7 +20,7 @@ public class Movement : MonoBehaviour {
     }
 
     public void LogicUpdate() {
-        CurrentVeloctity = rigid.velocity;
+        CurrentVelocity = rigid.velocity;
     }
 
     public void ClearVelocity() {
@@ -38,19 +39,21 @@ public class Movement : MonoBehaviour {
     }
 
     public void SetVelocityX(float velocity) {
-        workspace.Set(velocity, CurrentVeloctity.y);
+        workspace.Set(velocity, CurrentVelocity.y);
         SetFinalVelocity();
     }
 
     public void SetVelocityY(float velocity) {
-        workspace.Set(CurrentVeloctity.x, velocity);
+        workspace.Set(CurrentVelocity.x, velocity);
         SetFinalVelocity();
     }
 
     public void CheckIfShouldFlip(float xInput) {
-        int intInput = xInput > 0 ? 1 : -1;
-        if (xInput != 0.0f && intInput != FacingDirection) {
-            Flip();
+        if (xInput != 0f) {
+            intInput = xInput > 0 ? 1 : -1;
+            if (intInput != FacingDirection) {
+                Flip();
+            }
         }
     }
 
@@ -62,7 +65,7 @@ public class Movement : MonoBehaviour {
     public void SetFinalVelocity() {
         if (CanSetVelocity) {
             rigid.velocity = workspace;
-            CurrentVeloctity = workspace;
+            CurrentVelocity = workspace;
         }
     }
 }

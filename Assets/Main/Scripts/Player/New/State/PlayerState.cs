@@ -7,6 +7,7 @@ public class PlayerState {
     protected Player player;
     protected PlayerStateMachine stateMachine;
 
+    protected float startTime;
     protected bool isAnimationFinished, isExitingState;
 
     string animationName;
@@ -17,6 +18,9 @@ public class PlayerState {
         this.animationName = animationName;
 
         core = player.Core;
+    }
+
+    public PlayerState() {
     }
 
     public virtual void Enter() {

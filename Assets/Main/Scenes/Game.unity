@@ -221,6 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Core: {fileID: 1193648799}
   Animator: {fileID: 45466158}
+  Stat: {fileID: 11400000, guid: a05bf69a3c1c0f64580a78583b83c514, type: 2}
 --- !u!95 &45466158
 Animator:
   serializedVersion: 4
@@ -839,7 +840,7 @@ GameObject:
   - component: {fileID: 654534502}
   - component: {fileID: 654534503}
   m_Layer: 0
-  m_Name: EffectManager
+  m_Name: Effect Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1188,7 +1189,7 @@ GameObject:
   - component: {fileID: 979957935}
   - component: {fileID: 979957936}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: Game Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1868,10 +1869,26 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1613328578}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: Jump
-          m_Mode: 1
+        - m_Target: {fileID: 1193648801}
+          m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
+          m_MethodName: OnJumpInput
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1193648801}
+          m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
+          m_MethodName: OnJumpInput
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2399,7 +2416,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1507540531}
   m_Layer: 0
-  m_Name: GameUIManager
+  m_Name: Game UI Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
