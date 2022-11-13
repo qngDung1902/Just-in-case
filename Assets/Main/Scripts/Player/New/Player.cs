@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Player : MonoBehaviour {
+using UnityEditor;
+public class Player : MonoBehaviour
+{
     [Header("---CORE COMPONENTS---")]
     public Core Core;
     public Animator Animator;
@@ -17,8 +18,10 @@ public class Player : MonoBehaviour {
 
 
 
-    void Awake() {
+    void Awake()
+    {
         StateMachine = new PlayerStateMachine();
+
         IdleState = new PlayerIdleState(this, StateMachine, "idle");
         MoveState = new PlayerMoveState(this, StateMachine, "move");
         JumpState = new PlayerJumpState(this, StateMachine, "jump");
@@ -27,19 +30,32 @@ public class Player : MonoBehaviour {
 
     }
 
-    void Start() {
+    void Start()
+    {
         StateMachine.Initialize(IdleState);
     }
 
-    void Update() {
+    void Update()
+    {
         Core.LogicUpdate();
         StateMachine.CurrentState.LogicUpdate();
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         StateMachine.CurrentState.PhysicUpdate();
     }
 
     void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
     void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (Application.isPlaying)
+        {
+            Handles.Label(transform.position, $"{StateMachine.CurrentState}");
+        }
+    }
+#endif
 }

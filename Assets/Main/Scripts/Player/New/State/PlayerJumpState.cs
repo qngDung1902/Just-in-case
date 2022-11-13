@@ -2,27 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerJumpState : PlayerAbilityState {
+public class PlayerJumpState : PlayerAbilityState
+{
 
     int amountOfjumps;
 
-    public PlayerJumpState(Player player, PlayerStateMachine stateMachine, string animationName) : base(player, stateMachine, animationName) {
+    public PlayerJumpState(Player player, PlayerStateMachine stateMachine, string animationName) : base(player, stateMachine, animationName)
+    {
         amountOfjumps = player.Stat.amountOfjumps;
     }
 
-    public override void Enter() {
+    public override void Enter()
+    {
         base.Enter();
 
         core.Input.UseJumpInput();
         core.Movement.SetVelocityY(player.Stat.jumpVelocity);
         isAbilityDone = true;
 
+        Debug.Log(1);
+
         DecreaseAmountOfJumps();
         player.InAirState.SetIsJumping();
 
     }
 
-    public bool CanJump() {
+    public bool CanJump()
+    {
         return amountOfjumps > 0;
     }
 

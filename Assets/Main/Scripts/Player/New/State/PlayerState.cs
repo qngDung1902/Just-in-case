@@ -20,18 +20,16 @@ public class PlayerState {
         core = player.Core;
     }
 
-    public PlayerState() {
-    }
-
     public virtual void Enter() {
         DoChecks();
-        // player.Animator.SetBool(animationName, true);
+        player.Animator.SetBool(animationName, true);
+        startTime = Time.time;
         isAnimationFinished = false;
         isExitingState = false;
     }
 
     public virtual void Exit() {
-        // player.Animator.SetBool(animationName, false);
+        player.Animator.SetBool(animationName, false);
         isExitingState = true;
     }
 
