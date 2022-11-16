@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerLandState : PlayerGroundedState {
-    public PlayerLandState(Player player, PlayerStateMachine stateMachine, string animationName) : base(player, stateMachine, animationName) {
+public class PlayerLandState : PlayerGroundedState
+{
+    public PlayerLandState(Player player, PlayerStateMachine stateMachine, string animationName) : base(player, stateMachine, animationName)
+    {
     }
 
-    public override void LogicUpdate() {
+    public override void LogicUpdate()
+    {
         base.LogicUpdate();
 
-        if (!isExitingState) {
-            if (xInput != 0) {
+        if (!isExitingState)
+        {
+            if (xInput != 0)
+            {
                 stateMachine.ChangeState(player.MoveState);
-            } else {
+            }
+            else if (isAnimationFinished)
+            {
                 stateMachine.ChangeState(player.IdleState);
             }
         }

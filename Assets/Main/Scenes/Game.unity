@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 45466154}
   - component: {fileID: 45466158}
   - component: {fileID: 45466159}
+  - component: {fileID: 45466160}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -201,7 +202,7 @@ Rigidbody2D:
   m_Mass: 0.5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 2.8
+  m_GravityScale: 4
   m_Material: {fileID: 6200000, guid: e36d690155a44294286ba1e38b2c5326, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -294,6 +295,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &45466160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45466152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e78ccfce3a1215e4caa0d143a0d757c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preInstantiate: 0
+  render: {fileID: 45466159}
+  ghostPrefab: {fileID: 493671328478257687, guid: 9500f90f045c4db4291f14ae9a335f90, type: 3}
+  delay: 0.12
+  display: 1
 --- !u!1 &48568030
 GameObject:
   m_ObjectHideFlags: 0
@@ -1705,7 +1723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 1939517290}
-  groundCheckRadius: 0.3
+  groundCheckRadius: 0.1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -2694,8 +2712,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e78ccfce3a1215e4caa0d143a0d757c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  preInstantiate: 0
+  render: {fileID: 0}
   ghostPrefab: {fileID: 5916663504000169044, guid: 9500f90f045c4db4291f14ae9a335f90, type: 3}
   delay: 0.04
+  display: 0
 --- !u!1 &1650081524
 GameObject:
   m_ObjectHideFlags: 0
@@ -3858,7 +3879,7 @@ MonoBehaviour:
   m_Follow: {fileID: 45466153}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 5.625
+    OrthographicSize: 8
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -3945,8 +3966,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BindingMode: 0
   m_FollowOffset: {x: 2, y: 2, z: -10}
-  m_XDamping: 0
-  m_YDamping: 0
+  m_XDamping: 0.8
+  m_YDamping: 0.5
   m_ZDamping: 0
   m_AngularDampingMode: 0
   m_PitchDamping: 0
@@ -4264,7 +4285,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 32, y: 20}
+  m_AnchoredPosition: {x: 48, y: 20}
   m_SizeDelta: {x: 60, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3125867688847976662
@@ -4321,7 +4342,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 5.625
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4447,7 +4468,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5348893090849552339}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
   m_Name: 

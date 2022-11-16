@@ -6,36 +6,32 @@ using DG.Tweening;
 public class Ghost : MonoBehaviour
 {
     public float destroyTime;
-    public Color color, colorRed;
-    public Material material;
+    public Color color;
+    // public Material material;
     private SpriteRenderer spriteRenderer;
-    private InputController inputController;
     private void Awake()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        inputController = InputController.Instance;
     }
 
     private void OnEnable()
     {
-        spriteRenderer.sprite = inputController.spriteRenderer.sprite;
-        spriteRenderer.transform.localScale = inputController.transform.localScale;
-        switch (inputController.playerForm)
-        {
-            case PlayerForm.BASIC:
-                spriteRenderer.color = color;
-                break;
-            case PlayerForm.DEMON:
-                destroyTime = 0.25f;
-                spriteRenderer.color = colorRed;
-                break;
-        }
-        spriteRenderer.material = material;
+
+        // spriteRenderer.material = material;
+        spriteRenderer.color = color;
         Despawn();
     }
 
     private void Despawn()
     {
-        spriteRenderer.DOFade(0f, destroyTime + 0.1f).OnComplete(() => { SimplePool.Despawn(this.gameObject); });
+        spriteRenderer.DOFade(0f, destroyTime + 0.1f).OnComplete(() =>
+        {
+            GhostController.Instance.Release(this);
+        });
+    }
+
+    public void Init(Sprite sprite)
+    {
+        spriteRenderer.sprite = sprite;
     }
 }

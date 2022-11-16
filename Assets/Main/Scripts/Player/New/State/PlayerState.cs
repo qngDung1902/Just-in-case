@@ -10,7 +10,7 @@ public class PlayerState {
     protected float startTime;
     protected bool isAnimationFinished, isExitingState;
 
-    string animationName;
+    protected string animationName;
 
     public PlayerState(Player player, PlayerStateMachine stateMachine, string animationName) {
         this.player = player;

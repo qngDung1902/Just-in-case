@@ -2,14 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerIdleState : PlayerGroundedState {
+public class PlayerIdleState : PlayerGroundedState
+{
     public PlayerIdleState(Player player, PlayerStateMachine stateMachine, string animationName) : base(player, stateMachine, animationName) { }
 
-    public override void LogicUpdate() {
+    public override void Enter()
+    {
+        DoChecks();
+        player.Animator.SetBool(animationName, true);
+
+        startTime = Time.time;
+        isAnimationFinished = false;
+        isExitingState = false;
+        GhostController.Instance.display = false;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        player.Animator.SetBool(animationName, false);
+        GhostController.Instance.display = true;
+    }
+
+    public override void LogicUpdate()
+    {
         base.LogicUpdate();
 
-        if (!isExitingState) {
-            if (xInput != 0) {
+        if (!isExitingState)
+        {
+            if (xInput != 0)
+            {
                 stateMachine.ChangeState(player.MoveState);
             }
         }

@@ -1,21 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
-public class GhostController : MonoBehaviour
+public class GhostController : SingletonMonoBehaviour<GhostController>
 {
-    public GameObject ghostPrefab;
+    public SpriteRenderer render;
+    public Ghost ghostPrefab;
     public float delay;
+    public bool display;
     private float delta = 0;
-
-    private InputController player;
-    private void Awake() 
+    private ObjectPool<Ghost> pool;
+    public override void Awake()
     {
-        player = InputController.Instance;    
+        pool = new ObjectPool<Ghost>(
+            () => Instantiate(ghostPrefab, transform.position, Quaternion.identity),
+            (prefab) =>
+            {
+                prefab.gameObject.SetActive(true);
+                prefab.transform.position = transform.position;
+            },
+            (prefab) => prefab.gameObject.SetActive(false),
+            (prefab) => Destroy(prefab.gameObject),
+            false, 20, 40);
     }
-    
-    private void Update() 
+
+    private void Update()
     {
+        if (!display) return;
         if (delta > 0)
         {
             delta -= Time.deltaTime;
@@ -23,14 +35,19 @@ public class GhostController : MonoBehaviour
         else
         {
             delta = delay;
-            // if (player.state == PlayerState.IDLE) return;
-            
             CreateGhost();
         }
     }
 
+    public void Release(Ghost prefab)
+    {
+        pool.Release(prefab);
+    }
+
+    Ghost prefab;
     private void CreateGhost()
     {
-        GameObject ghostObj = SimplePool.Spawn(ghostPrefab, transform.position, Quaternion.identity);
+        pool.Get(out prefab);
+        prefab.Init(render.sprite);
     }
 }
