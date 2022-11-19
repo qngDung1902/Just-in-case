@@ -15,5 +15,6 @@ MonoBehaviour:
   movementVelocity: 6
   jumpVelocity: 16
   amountOfjumps: 2
-  coyoteTime: 0.2
+  coyoteTime: 0.1
   variableJumpHeightMultiplier: 1
+  wallSlideVelocity: 1

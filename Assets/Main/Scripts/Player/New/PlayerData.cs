@@ -13,5 +13,7 @@ public class PlayerData : ScriptableObject {
     [Header("---IN AIR STATE---")]
     public float coyoteTime = 0.2f;
     public float variableJumpHeightMultiplier = 0.5f;
+    [Header("WALL SLIDE STATE")]
+    public float wallSlideVelocity = 3f;
 
 }
