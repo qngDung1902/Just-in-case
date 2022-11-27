@@ -65,16 +65,16 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.JumpState);
         }
-        else if(jumpInput && (isTouchingWall || isTouchingWallBack || wallJumpCoyoteTime))
+        else if (jumpInput && (isTouchingWall || isTouchingWallBack || wallJumpCoyoteTime))
         {
             StopWallJumpCoyoteTime();
             isTouchingWall = core.CollisionSenses.WallFront;
-            // player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
-            // stateMachine.ChangeState(player.WallJumpState);
+            player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
+            stateMachine.ChangeState(player.WallJumpState);
         }
-        else if(isTouchingWall && xInput == core.Movement.FacingDirection && core.Movement.CurrentVelocity.y <= 0)
+        else if (isTouchingWall && xInput == core.Movement.FacingDirection/* && core.Movement.CurrentVelocity.y <= 0*/)
         {
-            // stateMachine.ChangeState(player.WallSlideState);
+            stateMachine.ChangeState(player.WallSlideState);
         }
         else
         {

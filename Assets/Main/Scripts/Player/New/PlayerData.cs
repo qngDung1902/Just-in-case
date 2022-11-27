@@ -4,7 +4,8 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Player Data", menuName = "Data/Player Data/Base Data")]
 
-public class PlayerData : ScriptableObject {
+public class PlayerData : ScriptableObject
+{
     [Header("---MOVE STATE---")]
     public float movementVelocity = 1f;
     [Header("---JUMP STATE---")]
@@ -15,5 +16,8 @@ public class PlayerData : ScriptableObject {
     public float variableJumpHeightMultiplier = 0.5f;
     [Header("WALL SLIDE STATE")]
     public float wallSlideVelocity = 3f;
-
+    [Header("WALL JUMP STATE")]
+    public float wallJumpVelocity = 20;
+    public float wallJumpTime = 0.4f;
+    public Vector2 wallJumpAngle = new Vector2(1, 2);
 }

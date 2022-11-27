@@ -31,8 +31,8 @@ public class PlayerTouchingWallState : PlayerState
 
         if (jumpInput)
         {
-            // player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
-            // stateMachine.ChangeState(player.WallJumpState);
+            player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
+            stateMachine.ChangeState(player.WallJumpState);
         }
         else if (isGrounded && !grabInput)
         {

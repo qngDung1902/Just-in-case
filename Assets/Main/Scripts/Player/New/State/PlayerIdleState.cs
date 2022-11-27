@@ -14,14 +14,12 @@ public class PlayerIdleState : PlayerGroundedState
         startTime = Time.time;
         isAnimationFinished = false;
         isExitingState = false;
-        GhostController.Instance.display = false;
     }
 
     public override void Exit()
     {
         base.Exit();
         player.Animator.SetBool(animationName, false);
-        GhostController.Instance.display = true;
     }
 
     public override void LogicUpdate()

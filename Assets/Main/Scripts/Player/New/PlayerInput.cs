@@ -28,6 +28,10 @@ public class PlayerInput : MonoBehaviour
         {
             OnJumpInput(false);
         }
+
+// #if UNITY_STANDALONE
+//         normalInputX = Input.GetAxisRaw("Horizontal");
+// #endif
     }
 
     void CheckJumpInputHoldTime()

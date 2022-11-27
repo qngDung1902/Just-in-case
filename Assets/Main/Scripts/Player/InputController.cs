@@ -7,7 +7,6 @@ using Lean.Gui;
 public class InputController : SingletonMonoBehaviour<InputController> {
     public float dashSpeed, timeDash;
     public AnimatorController animatorController;
-    public GhostController ghostController;
     public LeanJoystick joystick;
     public GameObject slashEffect;
     [HideInInspector] public SpriteRenderer spriteRenderer;
@@ -138,15 +137,9 @@ public class InputController : SingletonMonoBehaviour<InputController> {
         Camera.main.DOShakeRotation(0.2f, 1, 30, 25, true).SetUpdate(true).OnComplete(() => Time.timeScale = 1);
     }
 
-    // public void State(PlayerState state)
-    // {
-    //     playerState = state;
-    // }
-
     public void TransformToDemon() {
         if (playerForm != PlayerForm.DEMON) {
             playerForm = PlayerForm.DEMON;
-            ghostController.delay = 0.1f;
             animatorController.ChangeToDemonAnimator();
             GameUIManager.Instance.Active();
         }

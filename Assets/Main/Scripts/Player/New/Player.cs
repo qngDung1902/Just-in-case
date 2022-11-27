@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     public PlayerInAirState InAirState { get; private set; }
     public PlayerLandState LandState { get; private set; }
     public PlayerWallSlideState WallSlideState { get; private set; }
+    public PlayerWallJumpState WallJumpState { get; private set; }
+
 
 
 
@@ -29,9 +31,8 @@ public class Player : MonoBehaviour
         JumpState = new PlayerJumpState(this, StateMachine, "in-air");
         InAirState = new PlayerInAirState(this, StateMachine, "in-air");
         LandState = new PlayerLandState(this, StateMachine, "land");
+        WallJumpState = new PlayerWallJumpState(this, StateMachine, "in-air");
         WallSlideState = new PlayerWallSlideState(this, StateMachine, "wall-slide");
-
-
     }
 
     void Start()
