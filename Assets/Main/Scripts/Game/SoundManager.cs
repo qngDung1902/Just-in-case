@@ -7,42 +7,8 @@ using UnityEngine;
 using UnityEngine.Audio;
 using Random = UnityEngine.Random;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : SingletonMonoBehaviour<SoundManager>
 {
-    #region Instance
-    private static SoundManager instance;
-    public static SoundManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<SoundManager>();
-                if (instance == null)
-                {
-                    instance = Instantiate(Resources.Load<SoundManager>("SoundManager"));
-                }
-            }
-            return instance;
-        }
-    }
-
-    public static void LoadAsysn()
-    {
-        if (instance != null)
-            return;
-        Tool.LoadResourceAsyn<SoundManager>(delegate (ResourceRequest request)
-        {
-            instance = Instantiate(request.asset as SoundManager);
-            //instance.PlayHomeMusic();
-        });
-    }
-    public static bool Exist => instance != null;
-
-    #endregion
-
-    #region Inspector Variables
-
     public AudioSource music;
     public AudioMixer mixer;
     public AudioMixerGroup musicGroup, sfxGroup, voiceGroup;
@@ -51,20 +17,6 @@ public class SoundManager : MonoBehaviour
     public SortedList<int, AudioSource> voiceSound;
     public AudioClip[] gameMusics;
     public AudioClip[] homeMusics;
-    #endregion;
-
-    #region Unity Methods
-
-    private void Awake()
-    {
-        if (FindObjectsOfType(typeof(SoundManager)).Length > 1)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        instance = this;
-        DontDestroyOnLoad(this.gameObject);
-    }
 
     private void Start()
     {
@@ -81,24 +33,7 @@ public class SoundManager : MonoBehaviour
 
         mixer.SetFloat("music", PlayerPrefs.GetFloat(Const.MUSIC_VALUE));
         mixer.SetFloat("sfx", PlayerPrefs.GetFloat(Const.SOUND_VALUE));
-        // mixer.SetFloat("voice", PlayerPrefs.GetFloat(Const.VOICE_OVER_VALUE));
-        // if (PlayerPrefs.GetFloat(Const.MUSIC_VALUE) == -20)
-        // {
-        // 	TurnOff("music");
-        // }
-
-        // if (PlayerPrefs.GetFloat(Const.SOUND_VALUE) == -45)
-        // {
-        // 	TurnOff("sfx");
-        // }
-
-        // if (PlayerPrefs.GetFloat(Const.VOICE_OVER_VALUE) == -35)
-        // {
-        // 	TurnOff("voice");
-        // }
-
     }
-    #endregion;
 
     #region Public Methods
 

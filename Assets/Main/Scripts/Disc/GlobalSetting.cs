@@ -3,28 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-public class GlobalSetting : MonoBehaviour
+public class GlobalSetting : SingletonMonoBehaviour<GlobalSetting>
 {
-    private static GlobalSetting instance;
 
-    public static GlobalSetting Instance
+    public override void Awake()
     {
-        get
-        {
-            if (!instance)
-            {
-                instance = FindObjectOfType<GlobalSetting>();
-            }
-            return instance;
-        }
-    }
-
-    public static bool Exist => instance;
-    
-
-    private void Awake()
-    {
-        instance = this;
+        Application.targetFrameRate = 60;
         DontDestroyOnLoad(this);
     }
 
@@ -39,6 +23,6 @@ public class GlobalSetting : MonoBehaviour
     /// </summary>
     void Start()
     {
-        ChangeToScene(Const.SCENE_GAME);
+        // ChangeToScene(Const.SCENE_GAME);
     }
 }

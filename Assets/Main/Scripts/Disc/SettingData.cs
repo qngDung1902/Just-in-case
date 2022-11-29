@@ -4,34 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class SettingData : MonoBehaviour
+public class SettingData : SingletonMonoBehaviour<SettingData>
 {
-    #region Member Variables
     private bool _sound, _music, _vibrate, _notification;
     private const string KEY_SOUND = "setting_sound";
     private const string KEY_MUSIC = "setting_music";
     private const string KEY_VIBRATE = "setting_vibrate";
-    #endregion
 
-    public static SettingData instance;
-    public static SettingData Instance
+
+    public override void Awake()
     {
-        get
-        {
-            if (!instance)
-            {
-                instance = FindObjectOfType<SettingData>();
-            }
-            return instance;
-        }
-    }
-
-    public static bool Exist => instance;
-
-    void Awake()
-    {
-        instance = this;
-        DontDestroyOnLoad(this);
         SOUND = PlayerPrefs.GetInt(KEY_SOUND, 1) == 1;
         MUSIC = PlayerPrefs.GetInt(KEY_MUSIC, 1) == 1;
         VIBRATE = PlayerPrefs.GetInt(KEY_VIBRATE, 1) == 1;

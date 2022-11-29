@@ -3,27 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class GlobalEventManager : MonoBehaviour
+public class GlobalEventManager : SingletonMonoBehaviour<GlobalEventManager>
 {
-    private static GlobalEventManager instance;
-
-    public static GlobalEventManager Instance
-    {
-        get
-        {
-            if (!instance)
-            {
-                instance = FindObjectOfType<GlobalEventManager>();
-            }
-            return instance;
-        }
-    }
-    private void Awake()
-    {
-        instance = this;
-        DontDestroyOnLoad(this);
-    }
-    
-    public static bool Exist => instance;
-    public Action EvtSend;
 }

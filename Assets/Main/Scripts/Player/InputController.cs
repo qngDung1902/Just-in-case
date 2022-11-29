@@ -141,7 +141,6 @@ public class InputController : SingletonMonoBehaviour<InputController> {
         if (playerForm != PlayerForm.DEMON) {
             playerForm = PlayerForm.DEMON;
             animatorController.ChangeToDemonAnimator();
-            GameUIManager.Instance.Active();
         }
     }
 

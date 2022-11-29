@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class GameUIManager : SingletonMonoBehaviour<GameUIManager>
 {
-    public GameObject flickArea, jumpArea;
-    public void Active()
+    public TextMesh highscoreDisplay;
+    public override void Awake()
     {
-        flickArea.gameObject.SetActive(true);
-        jumpArea.gameObject.SetActive(false);
+        UpdateHighscore();
+
+    }
+    public void UpdateHighscore()
+    {
+        highscoreDisplay.text = $"HIGHSCORE: {PlayerDataManager.Highscore}";
     }
 }

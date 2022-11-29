@@ -19,9 +19,6 @@ public class Player : MonoBehaviour
     public PlayerWallJumpState WallJumpState { get; private set; }
 
 
-
-
-
     void Awake()
     {
         StateMachine = new PlayerStateMachine();
