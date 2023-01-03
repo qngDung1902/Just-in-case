@@ -7,6 +7,7 @@ public class Const
     public const string SCENE_LOADING = "Loading";
     public const string SCENE_HOME = "Home";
     public const string SCENE_GAME = "Game";
+    public const string SCENE_DEMO = "DemoElement";
 
     public const string TAG_GROUND = "Ground";
 

@@ -15,6 +15,13 @@ public class ChangeScene : Editor
     {
         OpenScene(Const.SCENE_GAME);
     }
+
+    [MenuItem("Open Scene/Demo #3")]
+    public static void OpenDemo()
+    {
+        OpenScene(Const.SCENE_DEMO);
+    }
+
     private static void OpenScene(string sceneName)
     {
         if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())

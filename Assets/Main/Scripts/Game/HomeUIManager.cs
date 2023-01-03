@@ -13,6 +13,6 @@ public class HomeUIManager : SingletonMonoBehaviour<HomeUIManager>
     
     public void OnStartClick()
     {
-        GlobalSetting.Instance.ChangeToScene(Const.SCENE_GAME);
+        GlobalSetting.Instance.ChangeToScene(Const.SCENE_DEMO);
     }
 }
