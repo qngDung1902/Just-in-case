@@ -4,8 +4,22 @@ using UnityEngine;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
-    public void OnDelta(Vector2 value)
+    public Player player;
+    public int updateTime;
+
+
+    public void Start()
     {
-        Debug.Log(value);
+        SoundManager.Instance.PlayGameMusic();
+        StartCoroutine(Autosave());
+    }
+
+    IEnumerator Autosave()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(updateTime);
+            GlobalSetting.autosaveCheckpoint = player.transform.position;
+        }
     }
 }

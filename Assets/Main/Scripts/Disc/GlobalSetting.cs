@@ -5,11 +5,16 @@ using UnityEngine.SceneManagement;
 using TMPro;
 public class GlobalSetting : SingletonMonoBehaviour<GlobalSetting>
 {
-
+    public static bool isContinue = false;
     public override void Awake()
     {
         Application.targetFrameRate = 60;
         DontDestroyOnLoad(this);
+
+        if (GlobalSetting.Exists())
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void ChangeToScene(string sceneName)
@@ -17,12 +22,16 @@ public class GlobalSetting : SingletonMonoBehaviour<GlobalSetting>
         SceneManager.LoadScene(sceneName);
     }
 
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before
-    /// any of the Update methods is called the first time.
-    /// </summary>
-    void Start()
+    public static Vector2 autosaveCheckpoint
     {
-        // ChangeToScene(Const.SCENE_GAME);
+        get
+        {
+            return new Vector2(PlayerPrefs.GetFloat("autosaveX", 0), PlayerPrefs.GetFloat("autosaveY", 0));
+        }
+        set
+        {
+            PlayerPrefs.SetFloat("autosaveX", value.x);
+            PlayerPrefs.SetFloat("autosaveY", value.y);
+        }
     }
 }

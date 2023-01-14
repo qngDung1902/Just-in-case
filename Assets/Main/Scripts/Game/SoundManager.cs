@@ -26,12 +26,11 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
         if (PlayerPrefs.GetInt(Const.FIRST_TIME_OPEN) == 0)
         {
-            // PlayerPrefs.SetInt(Const.FIRST_TIME_OPEN, 1);
             PlayerPrefs.SetFloat(Const.MUSIC_VALUE, 5);
             PlayerPrefs.SetFloat(Const.SOUND_VALUE, -5);
         }
 
-        mixer.SetFloat("music", PlayerPrefs.GetFloat(Const.MUSIC_VALUE));
+        mixer.SetFloat("music", SettingData.Instance.MUSIC ? 5 : -80);
         mixer.SetFloat("sfx", PlayerPrefs.GetFloat(Const.SOUND_VALUE));
     }
 

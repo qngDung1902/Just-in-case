@@ -26,7 +26,7 @@ public class Ghost : MonoBehaviour
     {
         spriteRenderer.DOFade(0f, destroyTime + 0.1f).OnComplete(() =>
         {
-            GhostController.Instance.Release(this);
+            //GhostController.Instance.Release(this);
         });
     }
 

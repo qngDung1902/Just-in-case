@@ -39,7 +39,7 @@ public class SettingData : SingletonMonoBehaviour<SettingData>
         {
             _music = value;
             PlayerPrefs.SetInt(KEY_MUSIC, _music ? 1 : 0);
-            onChangeMusicValue(value);
+            SoundManager.Instance.mixer.SetFloat("music", value ? 5 : -80);
         }
     }
 

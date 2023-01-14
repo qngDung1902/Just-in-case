@@ -6,8 +6,6 @@ public class TeleportPortal : MonoBehaviour
 {
     [SerializeField] private TeleportPortal transformTo;
     private bool cantTeleport;
-    // public AudioClip teleIn;
-    // public AudioClip teleOut;
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (cantTeleport) return;
@@ -16,10 +14,6 @@ public class TeleportPortal : MonoBehaviour
         {
             transformTo.cantTeleport = true;
             collider.transform.position = new Vector2(transformTo.transform.position.x, transformTo.transform.position.y);
-            // if (teleIn)
-            // {
-            //     SoundManager.Instance.PlaySfxRewind(teleIn);
-            // }
         }
     }
 
@@ -28,10 +22,6 @@ public class TeleportPortal : MonoBehaviour
         if (collider.gameObject.CompareTag("Player"))
         {
             if (cantTeleport) cantTeleport = false;
-            // if (teleOut)
-            // {
-            //     SoundManager.Instance.PlaySfxRewind(teleOut);
-            // }
         }
     }
 }

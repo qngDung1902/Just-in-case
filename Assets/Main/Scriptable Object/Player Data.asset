@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementVelocity: 5
   jumpVelocity: 12
-  amountOfjumps: 2
+  amountOfjumps: 3
   coyoteTime: 0.3
   variableJumpHeightMultiplier: 1
   wallSlideVelocity: 1

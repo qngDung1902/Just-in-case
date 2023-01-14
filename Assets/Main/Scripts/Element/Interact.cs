@@ -24,15 +24,6 @@ public class Interact : MonoBehaviour
 
     private void Start()
     {
-        // switch (interactType)
-        // {
-        //     case InteractType.LEVER:
-        //     if (Offset == 1)
-        //     {
-        //         spriteDisplay.transform.rotation = Quaternion.Euler(0f, 0f, -50f);
-        //     }
-        //     break;
-        // }
         if (transform.localScale.x < 0)
         {
             Active();
@@ -188,7 +179,6 @@ public class Interact : MonoBehaviour
                 // if (beforeRot != 50f)
                 // {
                 //     SoundManager.Instance.PlaySfxRewind(touch);
-
                 // }
                 tween.Kill();
                 tween = spriteDisplay.transform.DORotate(new Vector3(0, 0, 50f), 0.6f, RotateMode.Fast);
